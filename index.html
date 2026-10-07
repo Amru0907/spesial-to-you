@@ -15,21 +15,22 @@
   <!-- Bagian Utama Kue (Halaman 1) -->
   <main class="scene" id="cakeScene">
     <div class="cake-card">
-    <div class="cake">
-      <div class="candle">
-        <div class="flame"></div>
+      <div class="cake">
+        <div class="candle">
+          <div class="flame"></div>
+        </div>
+        <div class="cream" id="cream"></div>
+        <div class="slice big"   data-slice="1"></div>
+        <div class="slice small" data-slice="2"></div>
+        <div class="slice big"   data-slice="3"></div>
+        <div class="slice small" data-slice="4"></div>
+        <div class="slice big"   data-slice="5"></div>
       </div>
-      <div class="cream" id="cream"></div>
-      <div class="slice big"   data-slice="1"></div>
-      <div class="slice small" data-slice="2"></div>
-      <div class="slice big"   data-slice="3"></div>
-      <div class="slice small" data-slice="4"></div>
-      <div class="slice big"   data-slice="5"></div>
+      <div class="plate"></div>
+      <p class="greeting">HAPPY BIRTHDAY SAYANG</p>
+      
+      <button id="gifBtn" class="gift-btn" onclick="tampilkanKartuUcapan()">Honey, take a look at this.</button>
     </div>
-    <div class="plate"></div>
-    <p class="greeting">HAPPY BIRTHDAY SAYANG</p>
-    
-    <button id="gifBtn" class="gift-btn" onclick="tampilkanKartuUcapan()">Honey, take a look at this.</button>
   </main>
 
   <!-- Bagian Kartu Ucapan & Slider -->
@@ -110,6 +111,7 @@
         </div>
       </div>
 
+      <!-- Slide 5 -->
       <div class="slide" id="slide5">
         <div class="content">
           <img src="ia4.jpeg" alt="Foto Romantis">
@@ -121,19 +123,15 @@
         </div>
       </div>
 
-      <!-- Slide 5 -->
+      <!-- Slide 6 -->
       <div class="slide" id="slide6">
         <div class="content">
-          <p>Selamat ulang tahun, kesayanganku! 🎂💕</p>
-          <p>>Aku berharap kamu selalu dikelilingi sama kebahagiaan dan kesenangan ya, Sayang. Apapun itu bentuk kesenangannya, atau serumit apapun masalahmu—baik yang serius, hal kecil, maupun masalah sepele—aku mau kamu terus sharing ke aku, ya, Sayang.</p>
-          
-          <p>Aku selalu nunggu cerita dari kamu tiap harinya, jadi nggak usah sungkan dan nggak usah ngerasa nggak enak kalau sama aku. Justru karena aku cowok kamu, aku pengen banget direpotin sama kamu dalam hal apa pun itu. Selama kamu siap untuk cerita, aku juga selalu siap mendengarkan, Sayang. Kalau kamu emang lagi belum siap cerita, it's okay, bilang saja kalau kamu lagi nggak enak hati. Aku pasti ngasih space buat kamu, tapi jangan dipendem sendiri, ya, Cantik?</p>
-
-          <p>Jujur ya, Sayang, tiap hari aku ngerasa beruntung banget punya kamu. Mau itu lagi good day atau bad day, rasanya aku bisa jalanin semuanya karena ada kamu—walaupun kadang banyak ngeluhnya juga ke kamu, ya, hehehe...</p>
-
-          <p>Aku pengen banget bilang makasih banyak ke Ayah sama Mama kamu karena sudah melahirkan cewek gemes, cantik, manis, ngangenin, kadang suka tantrum, tapi yang paling penting sering banget bikin aku senyum-senyum sendiri. Makasih banyak, ya!</p>
-
-          <p>You're my favorite notification and my favorite person, no matter how many miles are between us. Selamat ulang tahun, ya, Sayangku. Love you more! Cepat ketemu, ya..</p>
+          <small>Selamat ulang tahun, kesayanganku! 🎂💕</small>
+          <small>Aku berharap kamu selalu dikelilingi sama kebahagiaan dan kesenangan ya, Sayang. Apapun itu bentuk kesenangannya, atau serumit apapun masalah kamu baik yang serius, hal kecil, maupun masalah sepele aku mau kamu terus sharing ke aku, ya, Sayang.</small>
+          <small>Aku selalu nunggu cerita dari kamu tiap harinya, jadi nggak usah sungkan dan nggak usah ngerasa nggak enak kalau sama aku. Justru karena aku cowok kamu, aku pengen banget direpotin sama kamu dalam hal apa pun itu. Selama kamu siap untuk cerita, aku juga selalu siap mendengarkan, Sayang. Kalau kamu emang lagi belum siap cerita, it's okay, bilang saja kalau kamu lagi nggak enak hati. Aku pasti ngasih space buat kamu, tapi jangan dipendem sendiri, ya, Cantik?</small>
+          <small>Jujur ya, Sayang, tiap hari aku ngerasa beruntung banget punya kamu. Mau itu lagi good day atau bad day, rasanya aku bisa jalanin semuanya karena ada kamu walaupun kadang banyak ngeluhnya juga ke kamu, ya, hehehe...</small>
+          <small>Aku pengen banget bilang makasih banyak ke Ayah sama Mama kamu karena sudah melahirkan cewek gemes, cantik, manis, ngangenin, kadang suka tantrum, tapi yang paling penting sering banget bikin aku senyum-senyum sendiri. Makasih banyak, ya!</small>
+          <small>You're my favorite notification and my favorite person, no matter how many miles are between us. Selamat ulang tahun, ya, Sayangku. Love you more! Cepat ketemu, ya..</small>
         </div>
         <div class="nav-btns" style="justify-content:center;">
           <button class="btn" onclick="prevSlide()">⬅ Kembali</button>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spesial For U</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Canvas animasi hati ditempatkan di luar agar bisa dipakai di kedua halaman -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Bagian Utama Kue (Halaman 1) -->
+  <main class="scene" id="cakeScene">
+    <div class="cake-card">
+    <div class="cake">
+      <div class="candle">
+        <div class="flame"></div>
+      </div>
+      <div class="cream" id="cream"></div>
+      <div class="slice big"   data-slice="1"></div>
+      <div class="slice small" data-slice="2"></div>
+      <div class="slice big"   data-slice="3"></div>
+      <div class="slice small" data-slice="4"></div>
+      <div class="slice big"   data-slice="5"></div>
+    </div>
+    <div class="plate"></div>
+    <p class="greeting">HAPPY BIRTHDAY SAYANG</p>
+    
+    <button id="gifBtn" class="gift-btn" onclick="tampilkanKartuUcapan()">Honey, take a look at this.</button>
+  </main>
+
+  <!-- Bagian Kartu Ucapan & Slider -->
+  <div id="cardSection" style="display: none;">
+    <div class="card">
+      <!-- Slide 1: PIN -->
+      <div class="slide active" id="slide1">
+        <div class="content">
+          <h1>Masukkan PIN Sayangg</h1>
+          <div class="pin-box">
+            <input type="password" maxlength="1" onkeydown="return false;">
+            <input type="password" maxlength="1" onkeydown="return false;">
+            <input type="password" maxlength="1" onkeydown="return false;">
+            <input type="password" maxlength="1" onkeydown="return false;">
+          </div>
+          <div class="keyboard">
+            <div class="row">
+              <button onclick="pressNum(1)">1</button>
+              <button onclick="pressNum(2)">2</button>
+              <button onclick="pressNum(3)">3</button>
+            </div>
+            <div class="row">
+              <button onclick="pressNum(4)">4</button>
+              <button onclick="pressNum(5)">5</button>
+              <button onclick="pressNum(6)">6</button>
+            </div>
+            <div class="row">
+              <button onclick="pressNum(7)">7</button>
+              <button onclick="pressNum(8)">8</button>
+              <button onclick="pressNum(9)">9</button>
+            </div>
+            <div class="row">
+              <button onclick="deleteNum()">⌫</button>
+              <button onclick="pressNum(0)">0</button>
+              <button onclick="checkPin()">✔</button>
+            </div>
+          </div>
+          <div class="error" id="errorMsg"></div>
+          <p style="margin-top:12px; font-size:16px; color:#555;"><i>* Clue: tanggal dan bulan kamu</i></p>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide" id="slide2">
+        <div class="content">
+          <h1>Selamat Ulang Tahun 🎉</h1>
+          <img src="kue.jpg" alt="Happy Birthday">
+          <p>Happy birthday to my favorite person! Jarak ini cuma angka, karena hati kita tetap dekat. Semoga hari ini seindah senyumanmu dan membawa kebahagiaan buat kamu di sana.</p>
+        </div>
+        <div class="nav-btns">
+          <button class="btn" onclick="prevSlide()">⬅ Kembali</button>
+          <button class="btn" onclick="nextSlide()">Lanjut ➡</button>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide" id="slide3">
+        <div class="content">
+          <h1>Doa & Harapan ✨</h1>
+          <img src="two.jpg" alt="Doa dan Harapan">
+          <p>sehat selalu buat ceweku satu ini, semoga semua keinginan kamu satu persatu terwujud ya cantikk 💕</p>
+        </div>
+        <div class="nav-btns">
+          <button class="btn" onclick="prevSlide()">⬅ Kembali</button>
+          <button class="btn" onclick="nextSlide()">Lanjut ➡</button>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide" id="slide4">
+        <div class="content">
+          <img src="fotbar .jpg" alt="Foto Romantis">
+          <p>ini foto bareng pertama kita, gemes gemesnya kita pas awal kenal iya ngga? hehehe. apalagi klo inget pas kamu izin segala buat gandeng aku lucu banget kalo keinget pas waktu itu. next kita bikin yang banyak yapp sayangg 💕</p>
+        </div>
+        <div class="nav-btns">
+          <button class="btn" onclick="prevSlide()">⬅ Kembali</button>
+          <button class="btn" onclick="nextSlide()">Lanjut ➡</button>
+        </div>
+      </div>
+
+      <div class="slide" id="slide5">
+        <div class="content">
+          <h1>ini kumpulan foto kamu yang gemesin ada banyak si sebener e hehehee</h1>
+          <img src="ia4.jpeg" alt="Foto Romantis">
+        </div>
+        <div class="nav-btns">
+          <button class="btn" onclick="prevSlide()">⬅ Kembali</button>
+          <button class="btn" onclick="nextSlide()">Lanjut ➡</button>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide" id="slide6">
+        <div class="content">
+          <p>Selamat ulang tahun, kesayanganku! 🎂💕
+
+Jujur, jarak kita jauh banget sekarang, tapi tenang... tagihan dari rasa rindu aku ke kamu makin hari makin menumpuk, jadi tunggu aja! Makasih ya udah lahir di dunia ini dan jadi alasan aku bisa se bahagia sekarang.
+
+Walaupun sekarang kita cuma bisa merayakan lewat layar kaca, doaku tetap sama: semoga jarak ini cepat selesai biar aku bisa cubit pipi kamu secara langsung, bukan cuma lewat video call.
+
+You're my favorite notification and my favorite person, no matter how many miles are between us. Love u more sayangg, Cepat ketemu, ya!</p>
+        </div>
+        <div class="nav-btns" style="justify-content:center;">
+          <button class="btn" onclick="prevSlide()">⬅ Kembali</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="replay" type="button">Ulangi</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

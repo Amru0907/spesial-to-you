@@ -1,0 +1,369 @@
+:root {
+  --u: 2px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+/* Styling Canvas agar melayang transparan di seluruh layar */
+#canvas {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  z-index: 0; 
+  pointer-events: none;
+}
+
+/* Background Besar Halaman Kue Utama */
+body {
+  background-image: url('bg1.png'); /* Warna dasar pink serasi dengan kartu ucapan */
+  
+  /* JIKA INGIN MENGGUNAKAN GAMBAR KHUSUS UNTUK HALAMAN KUE:
+     Ganti 'bg-kue.jpg' dengan nama file gambar Anda */
+  /* background-image: url('bg-kue.jpg'); */
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'monoid', sans-serif;
+  overflow: hidden;
+}
+
+.scene {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: calc(var(--u) * 20);
+}
+
+.cake {
+  position: relative;
+  width: calc(var(--u) * 150);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+/* Sesuaikan .scene agar layout rapi */
+.scene {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.cake-card {
+  position: relative;
+  z-index: 2; /* Tambahkan ini agar kue berada di atas love */
+  background-color: rgba(255, 248, 231, 0.5); /* Warna cream transparan */
+  border-radius: 24px;
+  
+  /* Area atas cukup untuk menutupi lilin */
+  padding-top: 100px;
+  
+  /* Padding bawah saat awal (sebelum lilin ditiup): pas di bawah piring */
+  padding-bottom: 25px;
+  padding-left: 35px;
+  padding-right: 35px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  max-width: 90%;
+  position: relative;
+
+  /* TAMBAHKAN TRANSISI untuk animasi perubahan ukuran halus ke bawah */
+  transition: padding-bottom 0.8s ease-in-out, max-height 0.8s ease-in-out;
+}
+
+/* Class tambahan saat lilin mati: background memanjang ke bawah */
+.cake-card.expand {
+  padding-bottom: 45px; /* Menambah ruang bawah untuk tulisan & tombol */
+}
+
+.slice {
+  width: 100%;
+  opacity: 0;
+  border-radius: calc(var(--u) * 3);
+  box-shadow: inset 0 calc(var(--u) * -1) rgba(0, 0, 0, 0.15);
+}
+.slice.big   { height: calc(var(--u) * 14); background: #a1746b; }
+.slice.small { height: calc(var(--u) * 5);  background: #8a5d55; }
+
+.slice.drop, .cream.drop {
+  animation: drop 0.9s cubic-bezier(.3, .7, .4, 1) forwards;
+}
+@keyframes drop {
+  0%   { transform: translateY(-450px); opacity: 0; }
+  15%  { opacity: 1; }
+  60%  { transform: translateY(0); opacity: 1; }
+  78%  { transform: translateY(-12px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.cream {
+  position: absolute;
+  top: calc(var(--u) * -5);
+  left: calc(var(--u) * -2);
+  width: calc(var(--u) * 154);
+  height: calc(var(--u) * 12);
+  background: #fff8e7;
+  border-radius: calc(var(--u) * 6);
+  box-shadow: 0 calc(var(--u) * 1.5) calc(var(--u) * 2) rgba(140, 90, 70, 0.2);
+  opacity: 0;
+  z-index: 2;
+}
+
+.drip {
+  position: absolute;
+  top: calc(var(--u) * 5.5);
+  background: #fff8e7;
+  border-radius: 0 0 var(--r) var(--r);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.cream.melt .drip {
+  animation: melt 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: var(--d);
+}
+@keyframes melt {
+  to { transform: scaleY(1); }
+}
+
+.candle {
+  position: absolute;
+  top: calc(var(--u) * -28);
+  left: 50%;
+  width: calc(var(--u) * 4);
+  height: calc(var(--u) * 25);
+  margin-left: calc(var(--u) * -2);
+  background: repeating-linear-gradient(
+    -45deg, #ffffff 0 calc(var(--u) * 3), #f8c8d8 calc(var(--u) * 3) calc(var(--u) * 5)
+  );
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 3;
+  cursor: pointer;
+}
+.candle.show { opacity: 1; transform: translateY(0); }
+.candle.lit:hover { filter: brightness(1.1); }
+
+.flame {
+  position: absolute;
+  top: calc(var(--u) * -12);
+  left: 50%;
+  width: calc(var(--u) * 6);
+  height: calc(var(--u) * 11);
+  background: linear-gradient(to top, #ff9800, #ffe066);
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  transform: translateX(-50%) scale(0);
+  transform-origin: bottom center;
+  transition: transform 0.5s ease;
+}
+.candle.lit .flame {
+  transform: translateX(-50%) scale(1);
+  animation: flicker 0.4s infinite alternate ease-in-out;
+}
+@keyframes flicker {
+  0%   { transform: translateX(-50%) scale(1, 1)     rotate(-3deg); }
+  100% { transform: translateX(-50%) scale(0.9, 1.1) rotate(3deg); }
+}
+
+.plate {
+  width: calc(var(--u) * 175);
+  height: calc(var(--u) * 2);
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 calc(var(--u) * 1) calc(var(--u) * 3) rgba(0, 0, 0, 0.1);
+}
+
+.greeting {
+  font-style: italic;
+  color: #b5485f;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  margin-top: 28px; 
+  font-size: 26px; 
+  text-align: center;
+}
+
+/* Saat lilin menyala: menampilkan tulisan "klik lilinnya sayang" */
+.greeting.show-hint {
+  opacity: 0.85;
+}
+
+/* Saat lilin ditiup: menampilkan tulisan "happy birthday!" */
+.greeting.show {
+  opacity: 1;
+}
+
+.gift-btn {
+  margin-top: 16px;
+  padding: 10px 24px;
+  font-family: 'monoid', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #b5485f;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+.greeting.show + .gift-btn {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.gift-btn:hover {
+  background-color: #9e3b50;
+  transform: scale(1.05);
+}
+
+/* Background Kartu Ucapan */
+#cardSection {
+  margin: 0;
+  height: 100vh;
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Calibri', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1; /* Pastikan z-index lebih rendah dari canvas */
+}
+
+#canvas {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  z-index: 0; /* Diubah dari 0 ke 1 agar muncul di atas background */
+  pointer-events: none;
+}
+
+/* Kartu Ucapan */
+.card {
+  position: relative; 
+  z-index: 2; /* Naikkan z-index kartu agar berada di atas animasi love */
+  background-color: rgba(255, 248, 231, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(245, 242, 242, 0.4); 
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  max-width: 420px; 
+  width: 90%; 
+  min-height: 520px;
+  display: flex; 
+  flex-direction: column; 
+  overflow: hidden;
+}
+.slide {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+.content {
+  flex: 1; padding: 20px;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; overflow-y: auto;
+}
+.card h1 { font-size: 28px; margin: 10px 0; color: #ff4d88; }
+.card p { font-size: 20px; color: #333; }
+.pin-box {
+  display: flex; gap: 10px; justify-content: center; margin: 15px 0;
+}
+.pin-box input {
+  width: 50px; height: 60px; font-size: 28px; text-align: center;
+  border-radius: 10px; border: 2px solid #ff4d88;
+}
+.error { color: #ff0000; margin-top: 10px; }
+.keyboard .row { display: flex; justify-content: center; margin: 5px 0; }
+.keyboard button {
+  width: 60px; height: 60px; margin: 5px; border: none; border-radius: 10px;
+  font-size: 20px; background: #ff4d88; color: #fff; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s;
+}
+.keyboard button:active { transform: scale(0.9); background: #e60073; }
+.card img { max-width: 80%; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.3); margin: 15px 0; }
+.btn {
+  padding: 10px 20px; border: none; border-radius: 10px;
+  background: #ff4d88; color: #fff; font-size: 18px; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;
+}
+.btn:hover { background: #e60073; }
+.nav-btns {
+  display: flex; 
+  justify-content: space-between; 
+  gap: 10px;
+  padding: 12px 20px; 
+  border-top: 1px solid rgba(255, 255, 255, 0.3); 
+  background: transparent;
+}
+
+@keyframes slideInRight { from {transform:translateX(100%); opacity:0;} to {transform:translateX(0); opacity:1;} }
+@keyframes slideOutLeft { from {transform:translateX(0); opacity:1;} to {transform:translateX(-100%); opacity:0;} }
+@keyframes slideInLeft { from {transform:translateX(-100%); opacity:0;} to {transform:translateX(0); opacity:1;} }
+@keyframes slideOutRight { from {transform:translateX(0); opacity:1;} to {transform:translateX(100%); opacity:0;} }
+.slide-in-right { animation: slideInRight 0.6s forwards; }
+.slide-out-left { animation: slideOutLeft 0.6s forwards; }
+.slide-in-left { animation: slideInLeft 0.6s forwards; }
+.slide-out-right { animation: slideOutRight 0.6s forwards; }
+
+#replay {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  padding: 8px 16px;
+  font-family: 'monoid', sans-serif;
+  font-size: 14px;
+  color: #b5485f;
+  background: #fff8e7;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  z-index: 99;
+}
+#replay:hover { background: #ffffff; }
+
+@media (max-width: 400px) {
+  :root { --u: 1.6px; }
+}
+
+/* Sembunyikan tombol Kembali khusus pada slide 2 */
+#slide2 .nav-btns .btn:first-child {
+  display: none;
+}
+
+/* Pastikan tombol Lanjut pada slide 2 tetap rapi di sebelah kanan */
+#slide2 .nav-btns {
+  justify-content: flex-end;
+}
